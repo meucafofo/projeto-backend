@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  starter-api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: spring-boot/api
+    ports: 
+      - '8080:8080'
+    container_name: 'meucafofo'
+    depends_on:
+      - db
+    environment:
+      DB_HOSTNAME: 'db'
+      DB_PORT: '5432'
+      DB_NAME: 'meucafofo'
+      DB_USER: 'postgres'
+      DB_PASSWORD: 'postgres'
+  db:
+    container_name: 'db'
+    image: 'postgres:latest'
+    ports:
+      - '5432:5432'
+      - '5433:5433'
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'meucafofo'

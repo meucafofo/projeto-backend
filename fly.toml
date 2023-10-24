@@ -1,0 +1,25 @@
+# fly.toml app configuration file generated for meucafofo-servico on 2023-10-10T20:06:15-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "meucafofo-servico"
+primary_region = "gru"
+
+[env]
+  DB_HOSTNAME = "meucafofo-servico-db.flycast"
+  DB_NAME = "meucafofo_servico"
+  DB_PORT = "5432"
+  DB_USER = "postgres"
+  GOOGLE_MAPS_URL = "https://maps.googleapis.com"
+  EMAIL_USER = "moises.caldas@hotmail.com"
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
