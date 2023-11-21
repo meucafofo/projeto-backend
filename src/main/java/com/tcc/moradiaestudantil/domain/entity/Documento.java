@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Documentos")
+@Table(name = "documentos")
 @Getter
 @Setter
 public class Documento {
@@ -39,10 +39,10 @@ public class Documento {
 	@Column(name = "conteudo")
 	private byte[] arquivo;
 	
-	@Column(name = "content_type")
+	@Column(name = "tipo_conteudo")
 	private String contentType;
 	
-	@Column(name = "status")
+	@Column(name = "status_documento")
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	

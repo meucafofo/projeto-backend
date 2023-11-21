@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Fotos")
+@Table(name = "fotos")
 @Getter
 @Setter
 public class Foto {
@@ -30,7 +30,7 @@ public class Foto {
 	@Column(name = "conteudo")
 	private byte[] arquivo;
 	
-	@Column(name = "content_type")
+	@Column(name = "tipo_conteudo")
 	private String contentType;
 
 	@ManyToOne(fetch = FetchType.EAGER)

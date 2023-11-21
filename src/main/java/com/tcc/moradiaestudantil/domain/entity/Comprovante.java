@@ -21,7 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Comprovantes")
+@Table(name = "comprovantes")
 @Getter
 @Setter
 public class Comprovante {
@@ -40,10 +40,10 @@ public class Comprovante {
 	@Column(name = "conteudo")
 	private byte[] arquivo;
 	
-	@Column(name = "content_type")
+	@Column(name = "tipo_conteudo")
 	private String contentType;
 	
-	@Column(name = "status")
+	@Column(name = "status_comprovante")
 	@Enumerated(EnumType.STRING)
 	private Status status;
 

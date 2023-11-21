@@ -1,5 +1,6 @@
 package com.tcc.moradiaestudantil.domain.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +33,7 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="usuario")
+@Entity(name="usuarios")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
@@ -54,8 +55,8 @@ public class Usuario implements UserDetails{
 	@Column(name = "cgc", unique = true)
 	private String cgc;
 	
-	@Column(name = "data_nascimento")
-	private String dataNasc;
+	@Column(name = "data_nasc")
+	private LocalDate dataNasc;
 	
 	@Column(name = "sexo")
 	private String sexo;
@@ -71,27 +72,19 @@ public class Usuario implements UserDetails{
 	@Column(name = "telefone")
 	private String telefone;
 	
-	@Column(name = "tipo_usuario")
+	@Column(name = "role_usuario")
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipoUsuario;
 	
-	@Column(name = "status")
+	@Column(name = "status_usuario")
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> documentos = new ArrayList<>();
-	
-	@JsonIgnore
-    @OneToMany(mappedBy = "acusador")
-    private List<Denuncia> denunciasAcusador = new ArrayList<>();
     
     @JsonIgnore
-    @OneToMany(mappedBy = "alvo")
-    private List<Denuncia> denunciasAlvo = new ArrayList<>();
-    
-    @JsonIgnore
-	@OneToMany(mappedBy = "locador")
+	@OneToMany(mappedBy = "locador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
  	private List<Moradia> moradia;
 
 	@Override

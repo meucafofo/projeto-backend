@@ -2,7 +2,7 @@ package com.tcc.moradiaestudantil.enums;
 
 public enum Status {
 
-	PENDENTE(0, "pendente"), APROVADO(1, "aprovado"), REPROVADO(2, "reprovado");
+	PENDENTE(0, "PENDENTE"), APROVADO(1, "APROVADO"), REPROVADO(2, "REPROVADO");
 
 	private Integer codigo;
 	private String descricao;

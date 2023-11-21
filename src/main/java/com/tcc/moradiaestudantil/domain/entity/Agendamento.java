@@ -15,7 +15,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name="Agendamento")
+@Entity(name="agendamentos")
 public class Agendamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -27,10 +27,6 @@ public class Agendamento implements Serializable{
 	@Column(name="data_hora")
 	private LocalDateTime dataVisita;
 	
-	@Column(name="status")
-	private String status;
-	
-    // Relacionamentos
     @ManyToOne
     @JoinColumn(name = "id_aluno")
     private Usuario Usuario;

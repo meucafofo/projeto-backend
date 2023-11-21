@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Faculdades")
+@Table(name = "faculdades")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,6 +25,7 @@ public class Faculdade {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_faculdade")
 	private Long id;
 	
 	@Column(unique = true)

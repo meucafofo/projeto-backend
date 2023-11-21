@@ -23,12 +23,10 @@ public class AgendamentoDTO implements Serializable{
 	public AgendamentoDTO(Long id, LocalDateTime horario, String status) {
 		this.id = id;
 		this.horario = horario;
-		this.status = status;
 	}
 	
 	public AgendamentoDTO(Agendamento agendamento) {
 		this.id = agendamento.getId();
 		this.horario = agendamento.getDataVisita();
-		this.status = agendamento.getStatus();
 	}
 }

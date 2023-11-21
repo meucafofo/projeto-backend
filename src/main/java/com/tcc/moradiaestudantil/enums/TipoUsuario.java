@@ -2,9 +2,9 @@ package com.tcc.moradiaestudantil.enums;
 
 public enum TipoUsuario {
 
-	ADMINISTRADOR(0, "Administrador"),
-	ALUNO(1, "Aluno"),
-	LOCADOR(2, "Locador");
+	ADMINISTRADOR(0, "ADMINISTRADOR"),
+	ALUNO(1, "ALUNO"),
+	LOCADOR(2, "LOCADOR");
 	
 	private Integer codigo;
 	private String descricao;

@@ -1,5 +1,6 @@
 package com.tcc.moradiaestudantil.config;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,7 @@ public class AdministradorConfig {
 			var senha = UUID.randomUUID().toString();
 			
 			usuarioPadrao.setNome("Systema");
-			usuarioPadrao.setDataNasc("01/01/2000");
+			usuarioPadrao.setDataNasc(LocalDate.of(1900, 1, 1));
 			usuarioPadrao.setEmail("system@meucafofo.github.io");
 			usuarioPadrao.setSenha(encoder.encode(senha));
 			usuarioPadrao.setTipoUsuario(TipoUsuario.ADMINISTRADOR);

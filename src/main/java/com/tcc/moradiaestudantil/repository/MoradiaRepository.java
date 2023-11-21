@@ -16,7 +16,7 @@ public interface MoradiaRepository extends JpaRepository<Moradia, Long> {
 
 	Optional<Moradia> findByIdAndLocador(Long id, Usuario usuario);
 
-	@Query(nativeQuery = true, value = "select m.* from moradia m inner join comprovantes c on c.id_moradia = m.id_moradia where c.status = 'PENDENTE'")
+	@Query(nativeQuery = true, value = "select m.* from moradias m inner join comprovantes c on c.id_moradia = m.id_moradia where c.status = 'PENDENTE'")
 	List<Moradia> recuperarMoradiasAguardandoAprovacao();
 
 	@Query(value = "SELECT m FROM Moradia m JOIN FETCH m.comprovante c WHERE c.status = 'APROVADO' AND m.id = :id")
@@ -24,7 +24,7 @@ public interface MoradiaRepository extends JpaRepository<Moradia, Long> {
 	
 	
 	
-	@Query(nativeQuery = true, value = "select m.*, coord.latitude, coord.longitude from moradia m "
+	@Query(nativeQuery = true, value = "select m.*, coord.latitude, coord.longitude from moradias m "
 			+ "inner join comprovantes c on c.id_moradia = m.id_moradia "
 			+ "inner join coordenadas coord on coord.id_coordenada = m.id_coordenada "
 			+ "where c.status = 'APROVADO' and (?1 in (select 'todos') "

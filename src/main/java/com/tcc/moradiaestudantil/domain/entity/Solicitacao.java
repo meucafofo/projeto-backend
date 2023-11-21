@@ -2,6 +2,7 @@ package com.tcc.moradiaestudantil.domain.entity;
 
 import com.tcc.moradiaestudantil.enums.TipoSolicitacao;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Solicitacoes")
+@Table(name = "solicitacoes")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,11 +27,13 @@ public class Solicitacao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_solicitacao")
 	private Long id;
 	
 	private String token;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_solicitacao")
 	private TipoSolicitacao tipoSolicitacao;
 	
 	private Boolean usado;
