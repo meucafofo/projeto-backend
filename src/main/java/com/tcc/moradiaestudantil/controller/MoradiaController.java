@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,10 @@ import com.tcc.moradiaestudantil.dto.DocumentoDTO;
 import com.tcc.moradiaestudantil.dto.MoradiaDTO;
 import com.tcc.moradiaestudantil.dto.ServiceResponseDTO;
 import com.tcc.moradiaestudantil.dto.mapper.GenericModelMapper;
+import com.tcc.moradiaestudantil.dto.request.AgendamentoDTO;
+import com.tcc.moradiaestudantil.dto.response.DetalharAgendamentoDTO;
 import com.tcc.moradiaestudantil.dto.response.DetalharMoradiaDTO;
+import com.tcc.moradiaestudantil.enums.StatusAgendamento;
 import com.tcc.moradiaestudantil.service.MoradiaService;
 import com.tcc.moradiaestudantil.service.UsuarioLogadoService;
 
@@ -41,7 +45,7 @@ public class MoradiaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseCreated);
 	}
 
-	@PostMapping(path = "/{id}/comprovante", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(path = "/{id}/comprovante", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<ServiceResponseDTO> cadastrarComprovante(@PathVariable final Long id,
 			@RequestParam("file") final MultipartFile file) {
 		moradiaService.cadastrarComprovante(id, file);
@@ -51,7 +55,7 @@ public class MoradiaController {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseCreated);
 	}
-	
+
 	@PostMapping(path = "/{id}/fotos", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<DocumentoDTO> cadastrarFoto(@PathVariable final Long id,
 			@RequestParam("file") final MultipartFile file) {
@@ -65,7 +69,7 @@ public class MoradiaController {
 		var listMoradiaPage = moradiaService.listarMoradiaPorLocador(usuario);
 		return ResponseEntity.ok().body(listMoradiaPage);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<Moradia>> listarTodos() {
 		List<Moradia> moradia = moradiaService.listarMoradia();
@@ -84,5 +88,23 @@ public class MoradiaController {
 		moradiaService.encerrarMoradia(id, usuario);
 		return ResponseEntity.noContent().build();
 	}
+
+	@PostMapping("/agendamentos")
+	public ResponseEntity<ServiceResponseDTO> agendarVisita(@RequestBody final AgendamentoDTO dto) {
+		var response = moradiaService.agendarVisita(dto.getIdMoradia(), dto.getEmailAluno(), dto.getHorario());
+		return ResponseEntity.ok(response);
+	}
 	
+	@GetMapping("/agendamentos")
+	public ResponseEntity<List<DetalharAgendamentoDTO>> recuperarAgendamentos(){
+		var usuario = UsuarioLogadoService.autheticated();
+		var response = moradiaService.recuperarAgendamentos(usuario.getId());
+		return ResponseEntity.ok(response);
+	}
+	
+	@PutMapping("/agendamentos/{id}/{status}")
+	public ResponseEntity<ServiceResponseDTO> atualizarStatusAgendamento(@PathVariable("id") final Long id, @PathVariable("status") final StatusAgendamento status){
+		var response = moradiaService.atualizarStatusAgendamento(id, status);
+		return ResponseEntity.ok(response);
+	}
 }

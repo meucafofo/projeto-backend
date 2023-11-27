@@ -2,6 +2,7 @@ CREATE TABLE agendamentos(
 	id_agenda BIGSERIAL PRIMARY KEY,
 	data_hora TIMESTAMP NOT NULL,
 	id_aluno BIGSERIAL NOT NULL,
+	status_agendamento VARCHAR(10) DEFAULT 'PENDENTE',
 	id_moradia BIGSERIAL NOT NULL
 );
 

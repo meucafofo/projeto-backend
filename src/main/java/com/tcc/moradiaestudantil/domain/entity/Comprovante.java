@@ -1,6 +1,6 @@
 package com.tcc.moradiaestudantil.domain.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import com.tcc.moradiaestudantil.enums.Status;
 
@@ -34,7 +34,7 @@ public class Comprovante {
 	private String nome;
 	
 	@Column(name = "data_sit")
-	private Date dataSituacao;
+	private LocalDateTime dataSituacao;
 	
 	@Lob
 	@Column(name = "conteudo")

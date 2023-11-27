@@ -1,6 +1,6 @@
 CREATE TABLE faculdades(
 	id_faculdade BIGSERIAL PRIMARY KEY,
-	nome VARCHAR(60) NOT NULL,
+	nome VARCHAR(180) NOT NULL,
 	localidade VARCHAR(180),
 	id_coordenada BIGSERIAL NOT NULL
 );

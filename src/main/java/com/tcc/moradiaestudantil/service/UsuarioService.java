@@ -30,6 +30,7 @@ import com.tcc.moradiaestudantil.exception.RegisterException;
 import com.tcc.moradiaestudantil.repository.DocumentoRepository;
 import com.tcc.moradiaestudantil.repository.SolicitacaoRepository;
 import com.tcc.moradiaestudantil.repository.UsuarioRepository;
+import com.tcc.moradiaestudantil.utils.MessagesPropertiesUtil;
 
 import lombok.AllArgsConstructor;
 
@@ -158,20 +159,41 @@ public class UsuarioService {
 	public void solicitarRecuperacaoSenha(String email) {
 		var usuario = usuarioRepository.findByEmail(email)
 				.orElseThrow(() -> new RegisterException("Email não cadastrado"));
-		var solicitacao = new Solicitacao(null, UUID.randomUUID().toString(), TipoSolicitacao.SENHA, false, usuario);
+		var solicitacao = Solicitacao.builder().token(UUID.randomUUID().toString()).usado(false)
+				.tipoSolicitacao(TipoSolicitacao.SENHA).usuario(usuario).build();
 		solicitacao = solicitacaoRepository.save(solicitacao);
-		emailService.sendMessage(email, "Recuperação de Senha",
-				"Acesse essa url para recuperar sua senha https://meucafofo.github.io/recuperar/"
-						+ solicitacao.getToken());
+		emailService.sendMessage(email, MessagesPropertiesUtil.getMessage("EMAIL_TITLE01"),
+				MessagesPropertiesUtil.getMessage("EMAIL_BODY01", solicitacao.getToken()));
 	}
 
+	@Transactional
 	public void recuperarSenha(String token, String senha) {
-		var solicitacao = solicitacaoRepository.findByTokenAndUsado(token, false)
+		var solicitacao = solicitacaoRepository
+				.findByTokenAndUsadoAndTipoSolicitacao(token, false, TipoSolicitacao.SENHA)
 				.orElseThrow(() -> new RegisterException("Token não identificado"));
 		var usuario = solicitacao.getUsuario();
 		usuario.setSenha(passwordEncoder.encode(senha));
-		solicitacao.setUsado(true);
 		solicitacaoRepository.save(solicitacao);
 		usuarioRepository.save(usuario);
+	}
+
+	@Transactional
+	public void solicitarCadastroAdministrador(String email) {
+		var solicitacao = Solicitacao.builder().token(UUID.randomUUID().toString()).usado(false)
+				.tipoSolicitacao(TipoSolicitacao.CADASTRO).build();
+		solicitacaoRepository.save(solicitacao);
+		emailService.sendMessage(email, MessagesPropertiesUtil.getMessage("EMAIL_TITLE02"),
+				MessagesPropertiesUtil.getMessage("EMAIL_BODY02", solicitacao.getToken()));
+	}
+
+	@Transactional
+	public ServiceResponseDTO cadastrarAdministrador(UsuarioDTO dto, String token) {
+		var solicitacao = solicitacaoRepository
+				.findByTokenAndUsadoAndTipoSolicitacao(token, false, TipoSolicitacao.CADASTRO)
+				.orElseThrow(() -> new RegisterException("Token não identificado"));
+		var resultado = this.cadastarUsuario(dto);
+		solicitacao.setUsado(true);
+		solicitacaoRepository.save(solicitacao);
+		return resultado;
 	}
 }

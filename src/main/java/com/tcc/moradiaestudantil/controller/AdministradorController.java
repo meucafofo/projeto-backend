@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,6 +22,8 @@ import com.tcc.moradiaestudantil.service.MoradiaService;
 import com.tcc.moradiaestudantil.service.UsuarioLogadoService;
 import com.tcc.moradiaestudantil.service.UsuarioService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -50,7 +53,7 @@ public class AdministradorController {
 	}
 
 	@PutMapping("/aprovar/moradias/{id}/{aprovacao}")
-	public ResponseEntity<ServiceResponseDTO> aprovarMoradia(final @PathVariable Long id, final @PathVariable("aprovacao") Status status) {
+	public ResponseEntity<ServiceResponseDTO> aprovarMoradia(@PathVariable final Long id, @PathVariable("aprovacao") final Status status) {
 		verificarAdministrador();
 		administradorService.aprovarMoradia(id, status);
 		var response = new ServiceResponseDTO("Moradia Aprovada", true);
@@ -58,12 +61,20 @@ public class AdministradorController {
 	}
 
 	@PutMapping("/aprovar/documentos/{id}/{aprovacao}")
-	public ResponseEntity<ServiceResponseDTO> aprovarDocumento(final @PathVariable Long id, final @PathVariable("aprovacao") Status status) {
+	public ResponseEntity<ServiceResponseDTO> aprovarDocumento(@PathVariable final Long id,@PathVariable("aprovacao") final Status status) {
 		verificarAdministrador();
 		administradorService.aprovarDocumento(id, status);
 		var response = new ServiceResponseDTO("Usuario Aprovado", true);
 		return ResponseEntity.ok(response);
 	}
+	
+	@PostMapping("/solicitar-cadastro/{email}")
+	public ResponseEntity<Void> solicitarCadastro(@PathVariable @Valid @Email final String email) {
+		verificarAdministrador();
+		usuarioService.solicitarCadastroAdministrador(email);
+		return ResponseEntity.noContent().build();
+	}
+	
 	private void verificarAdministrador() {
 		if (!(TipoUsuario.ADMINISTRADOR.equals(UsuarioLogadoService.autheticated().getTipoUsuario()))) {
 			throw new AuthorizationException("Usuario não possui permição para acessar esse recurso!");

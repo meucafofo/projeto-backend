@@ -3,18 +3,20 @@ package com.tcc.moradiaestudantil.dto.response;
 import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Data
-public class GeolocalizacaoMoradiaDTO implements Serializable {
+public class CoordenadaDTO implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7475961515199514593L;
-	
+	private static final long serialVersionUID = -701807496061760073L;
 	private Long id;
-	private CoordenadaDTO coordenada; 
+	private Double latitude;
+	private Double longitude;
 }

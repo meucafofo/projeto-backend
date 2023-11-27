@@ -16,18 +16,18 @@ public interface MoradiaRepository extends JpaRepository<Moradia, Long> {
 
 	Optional<Moradia> findByIdAndLocador(Long id, Usuario usuario);
 
-	@Query(nativeQuery = true, value = "select m.* from moradias m inner join comprovantes c on c.id_moradia = m.id_moradia where c.status = 'PENDENTE'")
+	@Query(nativeQuery = true, value = "SELECT m.* FROM moradias m INNER JOIN comprovantes c on c.id_moradia = m.id_moradia "
+			+ "WHERE c.status_comprovante = 'PENDENTE'")
 	List<Moradia> recuperarMoradiasAguardandoAprovacao();
 
-	@Query(value = "SELECT m FROM Moradia m JOIN FETCH m.comprovante c WHERE c.status = 'APROVADO' AND m.id = :id")
+	@Query(value = "SELECT m FROM Moradia m JOIN FETCH m.comprovante c "
+			+ "WHERE c.status = 'APROVADO' AND m.id = :id")
 	Optional<Moradia> findByIdMoradiaAprovada(Long id);
 	
-	
-	
-	@Query(nativeQuery = true, value = "select m.*, coord.latitude, coord.longitude from moradias m "
-			+ "inner join comprovantes c on c.id_moradia = m.id_moradia "
-			+ "inner join coordenadas coord on coord.id_coordenada = m.id_coordenada "
-			+ "where c.status = 'APROVADO' and (?1 in (select 'todos') "
-			+ "	or m.tipo_de_moradia = ?1) and m.preco > ?2 and m.preco < ?3")
+	@Query(nativeQuery = true, value = "SELECT m.*, coord.latitude, coord.longitude FROM moradias m "
+			+ "INNER JOIN comprovantes c ON c.id_moradia = m.id_moradia "
+			+ "INNER JOIN coordenadas coord ON coord.id_coordenada = m.id_coordenada "
+			+ "WHERE c.status_comprovante = 'APROVADO' AND (?1 in (select 'todos') "
+			+ "  OR m.tipo_de_moradia = ?1) AND m.preco > ?2 AND m.preco < ?3")
 	List<Moradia> pesquisarMoradiaPelosParametros(String tipoMoradia, BigDecimal precoMinimo, BigDecimal precoMaximo);
 }

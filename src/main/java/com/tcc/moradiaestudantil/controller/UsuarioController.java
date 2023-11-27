@@ -1,5 +1,7 @@
 package com.tcc.moradiaestudantil.controller;
 
+import java.util.Objects;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +37,17 @@ public class UsuarioController {
 	private GenericModelMapper modelMapper;
 
 	@PostMapping
-	public ResponseEntity<ServiceResponseDTO> cadastrarUsuario(@RequestBody UsuarioDTO usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.cadastarUsuario(usuario));
+	public ResponseEntity<ServiceResponseDTO> cadastrarUsuario(@RequestBody final UsuarioDTO usuario,
+			@RequestParam(name = "token", required = false) final String token) {
+		ServiceResponseDTO resultado;
+		
+		if (Objects.isNull(token)) {
+			resultado = usuarioService.cadastarUsuario(usuario);
+		} else {
+			resultado = usuarioService.cadastrarAdministrador(usuario, token);
+		}
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(resultado);
 	}
 
 	@GetMapping
@@ -77,9 +88,10 @@ public class UsuarioController {
 		usuarioService.solicitarRecuperacaoSenha(email);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@PostMapping("/recuperar-senha/{token}")
-	public ResponseEntity<Void> recuperarSenha(@PathVariable final String token, @RequestParam("senha") final String senha) {
+	public ResponseEntity<Void> recuperarSenha(@PathVariable final String token,
+			@RequestParam("senha") final String senha) {
 		usuarioService.recuperarSenha(token, senha);
 		return ResponseEntity.ok().build();
 	}

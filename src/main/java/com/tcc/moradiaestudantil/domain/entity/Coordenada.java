@@ -1,5 +1,7 @@
 package com.tcc.moradiaestudantil.domain.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,10 +20,19 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Coordenada {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8507778434160659814L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_coordenada")
 	private Long id;
+	
+	@Column(name = "latitude")
 	private Double latitude;
+	
+	@Column(name = "longitude")
 	private Double longitude;
 }

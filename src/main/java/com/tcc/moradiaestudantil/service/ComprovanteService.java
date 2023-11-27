@@ -1,5 +1,7 @@
 package com.tcc.moradiaestudantil.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ public class ComprovanteService {
 	
 	@Transactional
 	public void salvar(Comprovante comprovante) {
+		comprovante.setDataSituacao(LocalDateTime.now());
 		comprovanteRepository.save(comprovante);
 	}
 }

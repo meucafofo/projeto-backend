@@ -1,11 +1,11 @@
 CREATE TABLE documentos (
    id_documento BIGSERIAL PRIMARY KEY,
-   nome_arquivo VARCHAR (60) NOT NULL,
-   tipo_conteudo VARCHAR (5) NOT NULL,
+   nome_arquivo VARCHAR (180) NOT NULL,
+   tipo_conteudo VARCHAR (11) NOT NULL,
    data_sit TIMESTAMP NOT NULL,
-   tipo_documento VARCHAR (11),
+   tipo_documento VARCHAR (16),
    status_documento VARCHAR(8),
-   conteudo BYTEA NOT NULL,
+   conteudo BIGINT NOT NULL,
    id_usuario BIGSERIAL
 );
 

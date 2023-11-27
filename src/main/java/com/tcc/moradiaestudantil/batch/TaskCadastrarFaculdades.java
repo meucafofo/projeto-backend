@@ -8,6 +8,8 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tcc.moradiaestudantil.enums.PontoEstrategico;
 import com.tcc.moradiaestudantil.service.FaculdadeService;
@@ -34,6 +36,7 @@ public class TaskCadastrarFaculdades implements Tasklet {
 	private FaculdadeService faculdadeService;
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		String next = null;
 		var localizacoes = new ArrayList<LocalizacaoDTO>();

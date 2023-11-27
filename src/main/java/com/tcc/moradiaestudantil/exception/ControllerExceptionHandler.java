@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 @ControllerAdvice
+@Slf4j
 public class ControllerExceptionHandler {
 
 	@ExceptionHandler(ObjectNotFoundException.class)
@@ -27,7 +29,7 @@ public class ControllerExceptionHandler {
 	
 	@ExceptionHandler(RegisterException.class)
 	public ResponseEntity<StandardError> globalException(RegisterException e, HttpServletRequest request){
-		
+		log.error(e.getMessage());
 		StandardError err = new StandardError();
 		err.setTimeStamp(Instant.now());
 		err.setStatus(HttpStatus.BAD_REQUEST.value());

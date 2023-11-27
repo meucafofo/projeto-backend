@@ -1,5 +1,5 @@
 CREATE TABLE coordenadas (
 	id_coordenada BIGSERIAL PRIMARY KEY,
-	latitute DOUBLE PRECISION NOT NULL,
+	latitude DOUBLE PRECISION NOT NULL,
 	longitude DOUBLE PRECISION NOT NULL
 );
