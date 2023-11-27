@@ -8,7 +8,7 @@ primary_region = "gru"
 
 [env]
   DB_HOSTNAME = "meucafofo-servico-db.flycast"
-  DB_NAME = "meucafofo_servico"
+  DB_NAME = "meucafofo"
   DB_PORT = "5432"
   DB_USER = "postgres"
   GOOGLE_MAPS_URL = "https://maps.googleapis.com"
