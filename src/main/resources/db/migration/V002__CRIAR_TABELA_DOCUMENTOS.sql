@@ -10,4 +10,4 @@ CREATE TABLE documentos (
 );
 
 ALTER TABLE documentos ADD CONSTRAINT fk_documento_usuario 
-FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
+FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario);
